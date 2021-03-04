@@ -1,0 +1,4 @@
+{
+  "revision" : "0.0.1-pre1",
+  "roots": ["roles", "http/base/authz", "http/cygno/authz"]
+}
