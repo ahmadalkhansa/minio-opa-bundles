@@ -4,7 +4,7 @@ name: publish bundles
 on:
   push:
     branches:
-      - "master"
+      - "main"
     tags:
       - "*"
 
