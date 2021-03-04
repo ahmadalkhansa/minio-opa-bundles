@@ -25,4 +25,4 @@ opa run -s -c config.yaml
 
 ## Github Actions automation
 
-At each tag and push to main branch, a GH action is triggered and it automatically push the updated bundle on the Githubpages of this repo. From there it is then fetched by the opa server
+At each tag and push to main branch, a GH action is triggered and it automatically test and push the updated bundle on the Githubpages of this repo. From there it is then fetched by the opa server
