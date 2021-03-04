@@ -1,0 +1,25 @@
+
+name: publish bundles
+
+on:
+  push:
+    branches:
+      - "master"
+    tags:
+      - "*"
+
+jobs:
+  publish:
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        go-version: [1.16.x]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Make example bundle
+        run: tar czvf /tmp/example-bundle.tar.gz ./example 
+        timeout-minutes: 6
