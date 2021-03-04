@@ -24,13 +24,13 @@ jobs:
         run: wget https://github.com/open-policy-agent/opa/releases/download/v0.26.0/opa_linux_amd64 -O ./opa && chmod +x ./opa
         timeout-minutes: 6
       - name: Make example bundle
-        run: mkdir bundles && cd example && tar czvf ./bundles/example-bundle.tar.gz ./ 
+        run: mkdir bundles && cd example && tar czvf ../bundles/example-bundle.tar.gz ./ 
         timeout-minutes: 6
       - name: test example bundle
         run: ./opa test --bundle ./bundles/example-bundle.tar.gz
         timeout-minutes: 6
       - name: Make INFN-Cloud bundle
-        run: mkdir -p bundles && cd INFN-Cloud && tar czvf ./bundles/INFN_Cloud-bundle.tar.gz ./ 
+        run: mkdir -p bundles && cd INFN-Cloud && tar czvf ../bundles/INFN_Cloud-bundle.tar.gz ./ 
         timeout-minutes: 6
       - name: test INFN-Cloud bundle
         run: ./opa test --bundle ./bundles/INFN_Cloud-bundle.tar.gz
