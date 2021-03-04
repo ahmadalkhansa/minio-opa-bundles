@@ -21,5 +21,10 @@ jobs:
         with:
           fetch-depth: 1
       - name: Make example bundle
-        run: tar czvf /tmp/example-bundle.tar.gz ./example 
+        run: mkdir /tmp/bundles && tar czvf /tmp/bundles/example-bundle.tar.gz ./example 
         timeout-minutes: 6
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
