@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Make example bundle
-        run: mkdir .bundles && tar ./bundles/example-bundle.tar.gz ./example 
+        run: mkdir bundles && tar ./bundles/example-bundle.tar.gz ./example 
         timeout-minutes: 6
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
