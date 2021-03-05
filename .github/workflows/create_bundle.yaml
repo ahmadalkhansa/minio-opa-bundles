@@ -35,6 +35,12 @@ jobs:
       - name: test INFN-Cloud bundle
         run: ./opa test --bundle ./bundles/INFN_Cloud-bundle.tar.gz
         timeout-minutes: 6
+      - name: Make PLANET bundle
+        run: mkdir -p bundles && cd PLANET && tar czvf ../bundles/PLANET-bundle.tar.gz ./ 
+        timeout-minutes: 6
+      - name: test PLANET bundle
+        run: ./opa test --bundle ./bundles/PLANET-bundle.tar.gz
+        timeout-minutes: 6
       - name: Deploy bundles
         uses: peaceiris/actions-gh-pages@v3
         with:

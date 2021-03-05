@@ -7,7 +7,7 @@ allow {
   grp := input.claims.groups
   grp[_] == "Cygno"
   input.bucket == "cygnus"
-  input.claims.iss == "https://iam.cloud.infn.it/"
+  input.claims.iss == data.roles.permissions.issuer
   permissions := data.roles.permissions.user
   permissions[_] == {"action": input.action}
 }

@@ -1,5 +1,5 @@
 package http.base.authz
-
+import data
 
 test_post_allowed {
   allow with input as { "claims": { "preferred_username": "dciangot",
