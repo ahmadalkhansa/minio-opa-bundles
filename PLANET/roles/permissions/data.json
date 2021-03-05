@@ -1,5 +1,5 @@
 {
-    "issuer": "",
+    "issuer": "https://planet-iam.cloud.cnaf.infn.it/",
     "user": [{"action": "s3:CreateBucket"},
              {"action": "s3:DeleteBucket"},
              {"action": "s3:PutObjectLegalHold"},

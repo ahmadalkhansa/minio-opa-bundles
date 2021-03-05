@@ -16,7 +16,7 @@ allow {
 
   ref := input.conditions.Referer[_]
 
-  url := concat("/", ["^https://.*/minio/scratch",username,".*$"] )
+  url := concat("/", ["^https://.*:9000/minio/scratch",username,".*$"] )
 
   re_match( url , ref)
 
