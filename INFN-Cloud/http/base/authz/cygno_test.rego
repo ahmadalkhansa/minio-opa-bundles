@@ -2,7 +2,7 @@ package http.base.authz
 
 test_post_cygnus_allowed {
   allow with input as { "claims": { "preferred_username": "dciangot",
-                                    "groups": ["Cygno"],
+                                    "groups": ["cygno"],
                                     "iss": data.roles.permissions.issuer
                                   },
                         "bucket": "cygnus",
@@ -13,7 +13,7 @@ test_post_cygnus_allowed {
 
 test_post_cygnus_not_allowed {
   not allow with input as { "claims": { "preferred_username": "dciangot",
-                                    "groups": ["Cygno2"],
+                                    "groups": ["cygno2"],
                                     "iss": data.roles.permissions.issuer
                                   },
                         "bucket": "cygnus",
