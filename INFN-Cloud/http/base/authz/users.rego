@@ -1,4 +1,4 @@
-package http.base.authz
+package httpapi.authz
 import input
 import data
 
