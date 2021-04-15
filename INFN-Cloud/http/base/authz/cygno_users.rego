@@ -7,7 +7,7 @@ allow {
   grp := input.claims.groups
   grp[_] == "cygno_admins"
   input.bucket == "cygnus"
-  input.claims.iss == data.roles.permissions.issuer
+  startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.user
   permissions[_] == {"action": input.action}
 }
@@ -17,7 +17,7 @@ allow {
   grp := input.claims.groups
   grp[_] == "cygno"
   input.bucket == "cygnus"
-  input.claims.iss == data.roles.permissions.issuer
+  startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.scratch
   permissions[_] == {"action": input.action}
 }

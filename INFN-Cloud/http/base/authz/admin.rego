@@ -9,5 +9,5 @@ allow {
 allow {
   grp := input.claims.groups
   grp[_] == "s3admins"
-  input.claims.iss == data.roles.permissions.issuer 
+  startswith(input.claims.iss, data.roles.permissions.issuer)
 }

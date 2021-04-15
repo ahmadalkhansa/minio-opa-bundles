@@ -1,5 +1,5 @@
 {
-    "issuer": "https://login.cloud.infn.it/",
+    "issuer": "https://login.cloud.infn.it",
     "user": [{"action": "s3:CreateBucket"},
              {"action": "s3:DeleteBucket"},
              {"action": "s3:PutObjectLegalHold"},
