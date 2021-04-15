@@ -1,13 +1,23 @@
-package http.cygno.authz
+package http.base.authz
 import input
 import data
 
-# Allow users of group Cygno to manage their own data.
+# Allow users of group Cygno-admis to manage their own data.
 allow {
   grp := input.claims.groups
-  grp[_] == "Cygno"
+  grp[_] == "cygno_admins"
   input.bucket == "cygnus"
   input.claims.iss == data.roles.permissions.issuer
   permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
+# Allow users of group Cygno to see their own data.
+allow {
+  grp := input.claims.groups
+  grp[_] == "cygno"
+  input.bucket == "cygnus"
+  input.claims.iss == data.roles.permissions.issuer
+  permissions := data.roles.permissions.scratch
   permissions[_] == {"action": input.action}
 }

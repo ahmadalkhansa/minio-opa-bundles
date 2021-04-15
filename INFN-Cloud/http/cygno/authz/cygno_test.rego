@@ -1,4 +1,4 @@
-package http.cygno.authz
+package http.base.authz
 
 test_post_allowed {
   allow with input as { "claims": { "preferred_username": "dciangot",
