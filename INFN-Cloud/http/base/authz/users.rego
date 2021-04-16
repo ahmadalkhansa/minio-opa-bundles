@@ -10,3 +10,9 @@ allow {
   permissions[_] == {"action": input.action}
 }
 
+allow {
+  username := input.account
+  input.bucket == username
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
