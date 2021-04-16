@@ -36,7 +36,6 @@ allow {
 
   re_match( url , ref)
 
-  startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.user
   permissions[_] == {"action": input.action}
 }
