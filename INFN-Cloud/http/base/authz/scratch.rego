@@ -25,3 +25,18 @@ allow {
   permissions := data.roles.permissions.user
   permissions[_] == {"action": input.action}
 }
+
+# Allow users to write on scratch/<username> folder
+allow {
+  username := input.account
+
+  ref := input.conditions.Referer[_]
+
+  url := concat("/", ["^https://.*/minio/scratch",username,".*$"] )
+
+  re_match( url , ref)
+
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
