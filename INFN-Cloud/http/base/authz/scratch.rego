@@ -8,7 +8,7 @@ allow {
   permissions := data.roles.permissions.scratch
   # check if the permission granted to r matches the user's request
   permissions[_] == {"action": input.action}
-  startswith(input.claims.iss, data.roles.permissions.issuer)
+  #startswith(input.claims.iss, data.roles.permissions.issuer)
 }
 
 # Allow users to write on scratch/<username> folder
