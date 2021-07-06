@@ -5,7 +5,7 @@ import data
 # Allow users of group Cygno-admis to manage their own data.
 allow {
   grp := input.claims.groups
-  grp[_] == "cygno_admins"
+  grp[_] == "cygno"
   input.bucket == "cygnus"
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.user
@@ -15,7 +15,7 @@ allow {
 # Same for wlcg profile
 allow {
   grp := input.claims["wlcg.groups"]
-  grp[_] == "/cygno_admins"
+  grp[_] == "/cygno"
   input.bucket == "cygnus"
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.user
@@ -25,7 +25,7 @@ allow {
 # Allow users of group Cygno to see their own data.
 allow {
   grp := input.claims.groups
-  grp[_] == "cygno"
+  grp[_] == "cygno-users"
   input.bucket == "cygnus"
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.scratch
@@ -35,7 +35,7 @@ allow {
 # Wlcg profile
 allow {
   grp := input.claims["wlcg.groups"]
-  grp[_] == "/cygno"
+  grp[_] == "/cygno-users"
   input.bucket == "cygnus"
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.scratch
