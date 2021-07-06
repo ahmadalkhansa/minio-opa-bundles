@@ -4,6 +4,8 @@ import data
 
 # Allow to retrieve and see data from other users in scratch area
 allow {
+  grp := input.claims.groups
+  grp[_] == "end-users-catchall"
   input.bucket == "scratch"
   permissions := data.roles.permissions.scratch
   # check if the permission granted to r matches the user's request
@@ -13,8 +15,11 @@ allow {
 
 # Allow users to write on scratch/<username> folder
 allow {
-  username := split(lower(input.claims.preferred_username),"@")[0]
+  grp := input.claims.groups
+  grp[_] == "end-users-catchall"
 
+  username := split(lower(input.claims.preferred_username),"@")[0]
+  
   ref := input.conditions.Referer[_]
 
   url := concat("/", ["^https://.*/minio/scratch",username,".*$"] )
@@ -28,6 +33,9 @@ allow {
 
 # Allow users to write on scratch/<username> folder
 allow {
+  grp := input.claims.groups
+  grp[_] == "end-users-catchall"
+
   username := input.account
 
   ref := input.conditions.Referer[_]
