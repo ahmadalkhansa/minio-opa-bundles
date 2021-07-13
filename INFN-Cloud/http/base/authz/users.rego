@@ -13,8 +13,6 @@ allow {
 }
 
 allow {
-  grp := input.claims.groups
-  grp[_] == "end-users-catchall"
   username := input.account
   input.bucket == username
   permissions := data.roles.permissions.user
