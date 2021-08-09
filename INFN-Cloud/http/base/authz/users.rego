@@ -12,6 +12,16 @@ allow {
   permissions[_] == {"action": input.action}
 }
 
+# Temp hack for HERD GROUP
+allow {
+  username := split(lower(input.claims.preferred_username),"@")[0]
+  username == "mori"
+  input.bucket == "duranti"
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
 allow {
   username := input.account
   input.bucket == username
