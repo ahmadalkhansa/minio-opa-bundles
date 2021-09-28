@@ -6,7 +6,7 @@ import data
 allow {
   grp := input.claims.groups
   grp[_] == "cygno"
-  input.bucket == "cygnus"
+  input.bucket == data.roles.permissions.cygno_buckets[_]
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.user
   permissions[_] == {"action": input.action}
@@ -16,7 +16,7 @@ allow {
 allow {
   grp := input.claims["wlcg.groups"]
   grp[_] == "/cygno"
-  input.bucket == "cygnus"
+  input.bucket == data.roles.permissions.cygno_buckets[_]
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.user
   permissions[_] == {"action": input.action}
@@ -26,7 +26,7 @@ allow {
 allow {
   grp := input.claims.groups
   grp[_] == "cygno-users"
-  input.bucket == "cygnus"
+  input.bucket == data.roles.permissions.cygno_buckets[_]
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.scratch
   permissions[_] == {"action": input.action}
@@ -36,7 +36,7 @@ allow {
 allow {
   grp := input.claims["wlcg.groups"]
   grp[_] == "/cygno-users"
-  input.bucket == "cygnus"
+  input.bucket == data.roles.permissions.cygno_buckets[_]
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.scratch
   permissions[_] == {"action": input.action}

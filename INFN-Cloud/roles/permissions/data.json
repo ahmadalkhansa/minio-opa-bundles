@@ -1,4 +1,8 @@
 {
+    "cygno_buckets": ["cygnus",
+                     "cygno-analysis",
+                     "cygno-data",
+                     "cygno-sim"],
     "issuer": "https://iam.cloud.infn.it",
     "user": [{"action": "s3:CreateBucket"},
              {"action": "s3:DeleteBucket"},
