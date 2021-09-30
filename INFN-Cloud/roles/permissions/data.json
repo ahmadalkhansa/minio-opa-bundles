@@ -1,4 +1,6 @@
 {
+    "user_groups": ["end-users-catchall",
+                   "training-users"],
     "cygno_buckets": ["cygnus",
                      "cygno-analysis",
                      "cygno-data",
