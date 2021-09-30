@@ -14,7 +14,7 @@ allow {
 # Allow users to write on scratch/<username> folder
 allow {
   grp := input.claims.groups
-  grp[_] == "end-users-catchall"
+  grp[_] == data.roles.permissions.user_groups[_]
 
   username := split(lower(input.claims.preferred_username),"@")[0]
   
