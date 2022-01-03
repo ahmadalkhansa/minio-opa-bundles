@@ -41,11 +41,6 @@ jobs:
       - name: test PLANET bundle
         run: ./opa test --bundle ./bundles/PLANET-bundle.tar.gz
         timeout-minutes: 6
-      - name: Deploy bundles
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./bundles/
       - name: test example bundle
         run: ./opa test --bundle ./bundles/example-bundle.tar.gz
         timeout-minutes: 6
@@ -55,3 +50,8 @@ jobs:
       - name: test HERD bundle
         run: ./opa test --bundle ./bundles/HERD-bundle.tar.gz
         timeout-minutes: 6
+      - name: Deploy bundles
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./bundles/
