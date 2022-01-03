@@ -3,7 +3,7 @@ import input
 import data
 
 allow {
-  grp := input.claims.groups
+  grp := input.claims["wlcg.groups"]
   grp[_] == data.roles.permissions.user_groups[_]
   username := split(lower(input.claims.preferred_username),"@")[0]
   input.bucket == username
