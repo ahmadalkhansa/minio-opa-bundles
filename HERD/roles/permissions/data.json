@@ -1,6 +1,6 @@
 {
-    "user_groups": ["herd"],
-    "admin_groups": ["herd/minio-admin"],
+    "user_groups": ["herd", "/herd"],
+    "admin_groups": ["herd/minio-admin", "/herd/minio-admin"],
     "issuer": "https://iam-herd.cloud.cnaf.infn.it/",
     "user": [{"action": "s3:CreateBucket"},
              {"action": "s3:DeleteBucket"},
