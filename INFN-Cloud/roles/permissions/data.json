@@ -1,8 +1,8 @@
 {
-    "user_groups": ["end-users-catchall",
+    "user_groups": ["end-users-catchall", "/end-users-catchall",
                    "training-users",
-                   "naas",
-                   "users/muone"],
+                   "naas", "/naas",
+                   "users/muone",],
     "cygno_buckets": ["cygnus",
                      "cygno-analysis",
                      "cygno-data",
