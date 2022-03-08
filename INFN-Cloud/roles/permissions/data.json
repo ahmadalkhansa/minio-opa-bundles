@@ -2,7 +2,7 @@
     "user_groups": ["end-users-catchall", "/end-users-catchall",
                    "training-users",
                    "naas", "/naas",
-                   "users/muone",],
+                   "users/muone"],
     "cygno_buckets": ["cygnus",
                      "cygno-analysis",
                      "cygno-data",
