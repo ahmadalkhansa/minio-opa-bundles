@@ -12,7 +12,7 @@
                      "cygno-data"],
     "cygno_work_buckets": ["cygno-analysis",
                      "cygno-sim"],
-    "AMS_02_buckets": ["AMS-02"],
+    "AMS_02_buckets": ["ams-02"],
     "issuer": "https://iam.cloud.infn.it",
     "user": [{"action": "s3:CreateBucket"},
              {"action": "s3:DeleteBucket"},
