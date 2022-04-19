@@ -6,7 +6,7 @@ import data
 allow {
   grp := input.claims.groups
   grp[_] == "users/AMS-02"
-  input.bucket == data.roles.permissions.AMS-02_buckets[_]
+  input.bucket == data.roles.permissions.AMS_02_buckets[_]
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.user
   permissions[_] == {"action": input.action}
