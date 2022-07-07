@@ -29,9 +29,10 @@ jobs:
         run: |
           curl repo.data.kit.edu/repo-data-kit-edu-key.gpg \
             | gpg --dearmor \
-            > /etc/apt/trusted.gpg.d/kitrepo-archive.gpg
-          echo "deb https://repo.data.kit.edu/ubuntu/20.04 ./" >> /etc/apt/sources.list
-          apt update && sudo apt install -y oidc-agent
+            > /tmp/kitrepo-archive.gpg 
+          sudo cp /tmp/kitrepo-archive.gpg /etc/apt/trusted.gpg.d/kitrepo-archive.gpg
+          sudo bash -c "echo \"deb https://repo.data.kit.edu/ubuntu/20.04 ./\" >> /etc/apt/sources.list"
+          sudo apt update && sudo apt install -y oidc-agent
       - name: Make example bundle
         run: mkdir bundles && cd example && tar czvf ../bundles/example-bundle.tar.gz ./ 
         timeout-minutes: 6
