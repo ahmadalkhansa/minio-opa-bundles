@@ -59,6 +59,8 @@ jobs:
 
           eval $(oidc-keychain)
 
+          echo $IAM_SERVER
+
           oidc-gen infncloud --issuer "https://$IAM_SERVER/" \
               --client-id "$IAM_CLIENT_ID" \
               --client-secret "$IAM_CLIENT_SECRET" \
