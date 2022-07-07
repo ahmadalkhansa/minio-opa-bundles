@@ -12,6 +12,15 @@ allow {
   permissions[_] == {"action": input.action}
 }
 
+# Map sub to username
+allow {
+  sub := input.claims.sub
+  input.bucket == split(lower(data.roles.usermap[sub]),"@")[0]
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
 # Temp hack for HERD GROUP
 allow {
   username := split(lower(input.claims.preferred_username),"@")[0]

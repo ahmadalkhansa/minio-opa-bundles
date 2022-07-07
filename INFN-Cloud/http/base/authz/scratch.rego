@@ -31,6 +31,23 @@ allow {
   permissions[_] == {"action": input.action}
 }
 
+#  Allow users to write on scratch/<username> folder with wlcg profile
+allow {
+
+  sub := input.claims.sub
+  username := split(lower(data.roles.usermap[sub]),"@")[0]
+  
+  ref := input.conditions.Referer[_]
+
+  url := concat("/", ["^https://.*/minio/scratch",username,".*$"] )
+
+  re_match( url , ref)
+
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
 # Allow users to write on scratch/<username> folder
 allow {
 
@@ -53,6 +70,23 @@ allow {
   grp[_] == data.roles.permissions.user_groups[_]
 
   username := split(lower(input.claims.preferred_username),"@")[0]
+  
+  obj := input.object
+
+  regex := concat("", ["^",username,"/.*$"] )
+
+  re_match( regex , obj )
+
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
+# Allow users to write on scratch/<username> folder with wlcg profile
+allow {
+
+  sub := input.claims.sub
+  username := split(lower(data.roles.usermap[sub]),"@")[0]
   
   obj := input.object
 
