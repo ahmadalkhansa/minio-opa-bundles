@@ -1,0 +1,97 @@
+name: sync usermaps
+on:
+  push:
+    branches:
+      - "main"
+  schedule:
+    - cron: "45 * * * *"
+
+jobs:
+  publish:
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        go-version: [1.16.x]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: install opa
+        run: wget https://github.com/open-policy-agent/opa/releases/download/v0.26.0/opa_linux_amd64 -O ./opa && chmod +x ./opa
+        timeout-minutes: 6
+      - name: install oidc-agent
+        run: |
+          curl repo.data.kit.edu/repo-data-kit-edu-key.gpg \
+            | gpg --dearmor \
+            > /etc/apt/trusted.gpg.d/kitrepo-archive.gpg
+          echo "deb https://repo.data.kit.edu/ubuntu/20.04 ./" >> /etc/apt/sources.list
+          apt update && sudo apt install -y oidc-agent
+      - name: Make example bundle
+        run: mkdir bundles && cd example && tar czvf ../bundles/example-bundle.tar.gz ./ 
+        timeout-minutes: 6
+      - name: test example bundle
+        run: ./opa test --bundle ./bundles/example-bundle.tar.gz
+        timeout-minutes: 6
+      - name: prepare sync script reqs for INFN INFN-Cloud
+        run: |
+          wget https://github.com/DODAS-TS/iam-scim-map/archive/refs/tags/v0.1.2.tar.gz
+          tar -xzvf v0.1.2.tar.gz
+          cd iam-scim-map-0.1.2
+          python -m pip install --upgrade pip
+          pip install --user .
+          chmod +x bin/iam-scim-map
+          sudo cp bin/iam-scim-map /bin/
+      - name: Make INFN-Cloud bundle
+        env:
+          IAM_SERVER: ${{ secrets.IAM_SERVER }}
+          IAM_CLIENT_ID: ${{ secrets.IAM_CLIENT_ID }}
+          IAM_CLIENT_SECRET: ${{ secrets.IAM_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+        run: |
+          export OIDC_CONFIG_DIR=$HOME/.oidc-agent
+
+          eval $(oidc-keychain)
+
+          oidc-gen infncloud --issuer "https://$IAM_SERVER/" \
+              --client-id "$IAM_CLIENT_ID" \
+              --client-secret "$IAM_CLIENT_SECRET" \
+              --rt "$REFRESH_TOKEN" \
+              --confirm-yes \
+              --scope "scim:read" \
+              --redirect-uri http://localhost:8843 \
+              --pw-cmd "echo \"DUMMY PWD\""
+
+          OIDC_AGENT_NAME=infncloud AUTHORIZED_GROUPS="end-users-catchall training-users naas users/naas users/muone users/AMS-02 users/s3" iam-scim-map
+          cp /tmp/data.json INFN-Cloud/roles/usermap/data.json
+
+          mkdir -p bundles && cd INFN-Cloud && tar czvf ../bundles/INFN_Cloud-bundle.tar.gz ./ 
+        timeout-minutes: 6
+      - name: test INFN-Cloud bundle
+        run: ./opa test --bundle ./bundles/INFN_Cloud-bundle.tar.gz
+        timeout-minutes: 6
+      - name: Make PLANET bundle
+        run: mkdir -p bundles && cd PLANET && tar czvf ../bundles/PLANET-bundle.tar.gz ./ 
+        timeout-minutes: 6
+      - name: test PLANET bundle
+        run: ./opa test --bundle ./bundles/PLANET-bundle.tar.gz
+        timeout-minutes: 6
+      - name: test example bundle
+        run: ./opa test --bundle ./bundles/example-bundle.tar.gz
+        timeout-minutes: 6
+      - name: Make HERD bundle
+        run: mkdir -p bundles && cd HERD && tar czvf ../bundles/HERD-bundle.tar.gz ./ 
+        timeout-minutes: 6
+      - name: test HERD bundle
+        run: ./opa test --bundle ./bundles/HERD-bundle.tar.gz
+        timeout-minutes: 6
+      - name: Deploy bundles
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./bundles/
