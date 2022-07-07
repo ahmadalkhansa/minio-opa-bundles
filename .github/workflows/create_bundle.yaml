@@ -16,21 +16,67 @@ jobs:
         go-version: [1.16.x]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
+    environment: oidc-agent
     steps:
       - uses: actions/checkout@master
         with:
           fetch-depth: 1
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
       - name: install opa
         run: wget https://github.com/open-policy-agent/opa/releases/download/v0.26.0/opa_linux_amd64 -O ./opa && chmod +x ./opa
         timeout-minutes: 6
+      - name: install oidc-agent
+        run: |
+          curl repo.data.kit.edu/repo-data-kit-edu-key.gpg \
+            | gpg --dearmor \
+            > /tmp/kitrepo-archive.gpg 
+          sudo cp /tmp/kitrepo-archive.gpg /etc/apt/trusted.gpg.d/kitrepo-archive.gpg
+          sudo bash -c "echo \"deb https://repo.data.kit.edu/ubuntu/20.04 ./\" >> /etc/apt/sources.list"
+          sudo apt update && sudo apt install -y oidc-agent
       - name: Make example bundle
         run: mkdir bundles && cd example && tar czvf ../bundles/example-bundle.tar.gz ./ 
         timeout-minutes: 6
       - name: test example bundle
         run: ./opa test --bundle ./bundles/example-bundle.tar.gz
         timeout-minutes: 6
+      - name: prepare sync script reqs for INFN INFN-Cloud
+        run: |
+          wget https://github.com/DODAS-TS/iam-scim-map/archive/refs/tags/v0.1.2.tar.gz
+          tar -xzvf v0.1.2.tar.gz
+          cd iam-scim-map-0.1.2
+          python -m pip install --upgrade pip
+          pip install --user .
+          chmod +x bin/iam-scim-map
+          sudo cp bin/iam-scim-map /bin/
       - name: Make INFN-Cloud bundle
-        run: mkdir -p bundles && cd INFN-Cloud && tar czvf ../bundles/INFN_Cloud-bundle.tar.gz ./ 
+        env:
+          IAM_SERVER: ${{ secrets.IAM_SERVER }}
+          IAM_CLIENT_ID: ${{ secrets.IAM_CLIENT_ID }}
+          IAM_CLIENT_SECRET: ${{ secrets.IAM_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+        run: |
+          export OIDC_CONFIG_DIR=$HOME/.oidc-agent
+
+          eval $(oidc-keychain)
+
+          echo $IAM_SERVER
+
+          oidc-gen infncloud --issuer "https://$IAM_SERVER/" \
+              --client-id "$IAM_CLIENT_ID" \
+              --client-secret "$IAM_CLIENT_SECRET" \
+              --rt "$REFRESH_TOKEN" \
+              --confirm-yes \
+              --scope "scim:read" \
+              --redirect-uri http://localhost:8843 \
+              --pw-cmd "echo \"DUMMY PWD\""
+
+          OIDC_AGENT_NAME=infncloud AUTHORIZED_GROUPS="end-users-catchall training-users naas users/naas users/muone users/AMS-02 users/s3" iam-scim-map
+          cp /tmp/data.json INFN-Cloud/roles/usermap/data.json
+
+          mkdir -p bundles && cd INFN-Cloud && tar czvf ../bundles/INFN_Cloud-bundle.tar.gz ./ 
         timeout-minutes: 6
       - name: test INFN-Cloud bundle
         run: ./opa test --bundle ./bundles/INFN_Cloud-bundle.tar.gz
