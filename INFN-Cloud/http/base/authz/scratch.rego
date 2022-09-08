@@ -4,6 +4,8 @@ import data
 
 # Allow to retrieve and see data from other users in scratch area
 allow {
+  grp := input.claims.groups
+  grp[_] == data.roles.permissions.user_groups[_]
   input.bucket == "scratch"
   permissions := data.roles.permissions.scratch
   # check if the permission granted to r matches the user's request
@@ -34,6 +36,8 @@ allow {
 #  Allow users to write on scratch/<username> folder with wlcg profile
 allow {
 
+  grp := input.claims.groups
+  grp[_] == data.roles.permissions.user_groups[_]
   sub := input.claims.sub
   username := split(lower(data.roles.usermap[sub]),"@")[0]
   
