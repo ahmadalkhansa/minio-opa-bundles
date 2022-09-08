@@ -14,8 +14,9 @@ allow {
 
 # Map sub to username
 allow {
-  grp := input.claims.groups
-  grp[_] == data.roles.permissions.user_groups[_]
+
+  input.claims.aud == "https://wlcg.cern.ch/jwt/v1/any"
+
   sub := input.claims.sub
   input.bucket == split(lower(data.roles.usermap[sub]),"@")[0]
   startswith(input.claims.iss, data.roles.permissions.issuer)

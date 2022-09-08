@@ -13,7 +13,8 @@ test_post_allowed {
 
 test_post_wlcg_allowed {
   allow with input as { "claims": { "sub": "2f8dcc16-c636-4a56-9ada-63b761d89286",
-                                    "iss": data.roles.permissions.issuer
+                                    "iss": data.roles.permissions.issuer,
+                                    "aud": "https://wlcg.cern.ch/jwt/v1/any",
                                   },
                         "bucket": "ciangottini",
                         "action": "s3:ListBucket"

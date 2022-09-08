@@ -13,6 +13,17 @@ allow {
   #startswith(input.claims.iss, data.roles.permissions.issuer)
 }
 
+# Allow to retrieve and see data from other users in scratch area (wlcg profile)
+allow {
+  input.claims.aud == "https://wlcg.cern.ch/jwt/v1/any"
+
+  input.bucket == "scratch"
+  permissions := data.roles.permissions.scratch
+  # check if the permission granted to r matches the user's request
+  permissions[_] == {"action": input.action}
+  #startswith(input.claims.iss, data.roles.permissions.issuer)
+}
+
 #### Referer included in s3 request
 
 # Allow users to write on scratch/<username> folder
@@ -36,8 +47,8 @@ allow {
 #  Allow users to write on scratch/<username> folder with wlcg profile
 allow {
 
-  grp := input.claims.groups
-  grp[_] == data.roles.permissions.user_groups[_]
+  input.claims.aud == "https://wlcg.cern.ch/jwt/v1/any"
+
   sub := input.claims.sub
   username := split(lower(data.roles.usermap[sub]),"@")[0]
   
