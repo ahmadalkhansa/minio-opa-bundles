@@ -71,7 +71,7 @@ jobs:
               --redirect-uri http://localhost:8843 \
               --pw-cmd "echo \"DUMMY PWD\""
 
-          OIDC_AGENT_NAME=infncloud AUTHORIZED_GROUPS="end-users-catchall training-users naas users/naas users/muone users/AMS-02 users/s3" iam-scim-map
+          OIDC_AGENT_NAME=infncloud AUTHORIZED_GROUPS="end-users-catchall training training-users naas users/naas users/muone users/AMS-02 users/s3" iam-scim-map
           cp /tmp/data.json INFN-Cloud/roles/usermap/data.json
 
           mkdir -p bundles && cd INFN-Cloud && tar czvf ../bundles/INFN_Cloud-bundle.tar.gz ./ 
