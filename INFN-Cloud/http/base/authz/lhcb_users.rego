@@ -5,7 +5,7 @@ import data
 # Allow to retrieve and see data from other users in scratch area
 allow {
   grp := input.claims.groups
-  grp[_] == data.roles.data.roles.permissions.lhcb_users_groups[_]
+  grp[_] == data.roles.permissions.lhcb_users_groups[_]
   input.bucket == "lhcb-data"
   permissions := data.roles.permissions.scratch
   # check if the permission granted to r matches the user's request
