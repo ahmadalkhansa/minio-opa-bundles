@@ -15,6 +15,8 @@ allow {
 
 # Allow to retrieve and see data from other users in scratch area (wlcg profile)
 allow {
+  grp := input.claims["wlcg.groups"]
+  grp[_] == data.roles.permissions.lhcb_users_groups[_]
   input.claims.aud == "https://wlcg.cern.ch/jwt/v1/any"
 
   input.bucket == "lhcb-data"
