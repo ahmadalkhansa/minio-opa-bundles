@@ -7,6 +7,8 @@
                    "users/muone",
                    "users/AMS-02",
                    "users/s3"],
+    "lhcb_admin_groups": ["/admins/lhcb", "admins/lhcb"],
+    "lhcb_users_groups": ["/users/lhcb", "users/lhcb"],
     "cygno_buckets": ["cygnus",
                      "cygno-analysis",
                      "cygno-data",
