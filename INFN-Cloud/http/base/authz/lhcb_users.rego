@@ -70,7 +70,7 @@ allow {
 # Allow users to write on scratch/<username> folder
 allow {
 
-  username := input.account
+  username := replace(input.account, "_", "")
 
   ref := input.conditions.Referer[_]
 
@@ -88,7 +88,7 @@ allow {
   grp := input.claims.groups
   grp[_] == data.roles.permissions.lhcb_users_groups[_]
 
-  username := split(lower(input.claims.preferred_username),"@")[0]
+  username := replace(split(lower(data.roles.usermap[sub]),"@")[0], "_", "")
   
   obj := input.object
 
@@ -107,7 +107,7 @@ allow {
   grp[_] == data.roles.permissions.lhcb_users_groups[_]
 
   sub := input.claims.sub
-  username := split(lower(data.roles.usermap[sub]),"@")[0]
+  username := replace(split(lower(data.roles.usermap[sub]),"@")[0], "_", "")
   
   obj := input.object
 
@@ -123,7 +123,7 @@ allow {
 # Allow users to write on scratch/<username> folder
 allow {
 
-  username := input.account
+  username := replace(input.account, "_", "")
 
   obj := input.object
 
