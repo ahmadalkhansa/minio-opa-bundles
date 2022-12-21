@@ -33,7 +33,7 @@ allow {
   grp := input.claims.groups
   grp[_] == data.roles.permissions.lhcb_users_groups[_]
 
-  username := split(lower(input.claims.preferred_username),"@")[0]
+  username := replace(split(lower(input.claims.preferred_username),"@")[0], "_", "")
   
   ref := input.conditions.Referer[_]
 
@@ -54,7 +54,7 @@ allow {
   input.claims.aud == "https://wlcg.cern.ch/jwt/v1/any"
 
   sub := input.claims.sub
-  username := split(lower(data.roles.usermap[sub]),"@")[0]
+  username := replace(split(lower(data.roles.usermap[sub]),"@")[0], "_", "")
   
   ref := input.conditions.Referer[_]
 
