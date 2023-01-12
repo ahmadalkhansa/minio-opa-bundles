@@ -2,11 +2,11 @@ package http.base.authz
 
 
 test_post_allowed {
-  allow with input as { "claims": { "preferred_username": "dciangot",
+  allow with input as { "claims": { "preferred_username": "matteo_barbetti",
                                     "iss": data.roles.permissions.issuer,
                                     "groups": ["end-users-catchall"]
                                   },
-                        "bucket": "dciangot",
+                        "bucket": "matteobarbetti",
                         "action": "s3:ListBucket"
                       }
 }
