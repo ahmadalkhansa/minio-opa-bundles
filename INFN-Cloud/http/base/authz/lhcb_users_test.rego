@@ -6,7 +6,8 @@ test_post_lhcbusers_allowed {
                                     "iss": data.roles.permissions.issuer
                                   },
                         "bucket": "lhcb-data",
-                        "action": "s3:ListBucket"
+                        "action": "s3:PutObject",
+                        "object": "matteobarbetti/sadasd.root"
                       }
 }
 

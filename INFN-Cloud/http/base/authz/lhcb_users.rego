@@ -88,8 +88,9 @@ allow {
   grp := input.claims.groups
   grp[_] == data.roles.permissions.lhcb_users_groups[_]
 
-  username := replace(split(lower(data.roles.usermap[sub]),"@")[0], "_", "")
+  username := replace(split(lower(input.claims.preferred_username),"@")[0], "_", "")
   
+  input.bucket == "lhcb-data"
   obj := input.object
 
   regex := concat("", ["^",username,"/.*$"] )
@@ -109,6 +110,7 @@ allow {
   sub := input.claims.sub
   username := replace(split(lower(data.roles.usermap[sub]),"@")[0], "_", "")
   
+  input.bucket == "lhcb-data"
   obj := input.object
 
   regex := concat("", ["^",username,"/.*$"] )
@@ -125,6 +127,7 @@ allow {
 
   username := replace(input.account, "_", "")
 
+  input.bucket == "lhcb-data"
   obj := input.object
 
   regex := concat("", ["^",username,"/.*$"] )

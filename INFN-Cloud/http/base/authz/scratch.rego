@@ -31,7 +31,7 @@ allow {
   grp := input.claims.groups
   grp[_] == data.roles.permissions.user_groups[_]
 
-  username := split(lower(input.claims.preferred_username),"@")[0]
+  username := replace(split(lower(input.claims.preferred_username),"@")[0], "_", "")
   
   ref := input.conditions.Referer[_]
 
@@ -50,8 +50,8 @@ allow {
   input.claims.aud == "https://wlcg.cern.ch/jwt/v1/any"
 
   sub := input.claims.sub
-  username := split(lower(data.roles.usermap[sub]),"@")[0]
-  
+  username :=  replace(split(lower(data.roles.usermap[sub]),"@")[0], "_", "")
+
   ref := input.conditions.Referer[_]
 
   url := concat("/", ["^https://.*/minio/scratch",username,".*$"] )
@@ -66,8 +66,7 @@ allow {
 # Allow users to write on scratch/<username> folder
 allow {
 
-  username := input.account
-
+  username := replace(split(lower(input.account),"@")[0], "_", "")
   ref := input.conditions.Referer[_]
 
   url := concat("/", ["^https://.*/minio/scratch",username,".*$"] )
@@ -84,7 +83,9 @@ allow {
   grp := input.claims.groups
   grp[_] == data.roles.permissions.user_groups[_]
 
-  username := split(lower(input.claims.preferred_username),"@")[0]
+  input.bucket == "scratch"
+
+  username := replace(split(lower(input.claims.preferred_username),"@")[0], "_", "")
   
   obj := input.object
 
@@ -101,8 +102,10 @@ allow {
 allow {
 
   sub := input.claims.sub
-  username := split(lower(data.roles.usermap[sub]),"@")[0]
+  username := replace(split(lower(data.roles.usermap[sub]),"@")[0], "_", "")
   
+  input.bucket == "scratch"
+
   obj := input.object
 
   regex := concat("", ["^",username,"/.*$"] )
@@ -117,7 +120,9 @@ allow {
 # Allow users to write on scratch/<username> folder
 allow {
 
-  username := input.account
+  username := replace(split(lower(input.account),"@")[0], "_", "")
+
+  input.bucket == "scratch"
 
   obj := input.object
 
