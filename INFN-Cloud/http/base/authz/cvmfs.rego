@@ -4,7 +4,7 @@ import data
 
 allow {
 
-  input.accout == "cvmfs_publisher"
+  input.account == "cvmfs_publisher"
 
   obj := input.object
 
