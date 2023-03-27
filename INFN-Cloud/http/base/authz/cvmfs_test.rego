@@ -7,3 +7,11 @@ test_read_cvmfs_allowed {
                         "action": "s3:GetObject"
                       }
 }
+
+test_listbucket_cvmfs_allowed {
+  allow with input as { 
+                        "account": "cvmfs_publisher",
+                        "bucket": "dciangot",
+                        "action": "s3:ListBucket"
+                      }
+}

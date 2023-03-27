@@ -15,3 +15,14 @@ allow {
   permissions := data.roles.permissions.scratch
   permissions[_] == {"action": input.action}
 }
+
+
+allow {
+
+  input.account == "cvmfs_publisher"
+
+  obj := input.object
+
+  input.action == "s3:ListBucket"
+}
+
