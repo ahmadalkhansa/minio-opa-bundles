@@ -3,7 +3,7 @@ package http.base.authz
 test_read_cvmfs_allowed {
   allow with input as { 
                         "account": "cvmfspublisher",
-                        "object": "dciangot/cvmfs/testme",
+                        "object": "cvmfs/testme",
                         "action": "s3:GetObject"
                       }
 }
