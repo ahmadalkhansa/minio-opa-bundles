@@ -8,7 +8,7 @@ allow {
 
   obj := input.object
 
-  regex := concat("", ["^.*/cvmfs/.*$"] ) 
+  regex := concat("", ["^cvmfs/.*$"] ) 
 
   re_match( regex , obj )
 
