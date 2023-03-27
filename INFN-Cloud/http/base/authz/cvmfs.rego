@@ -4,7 +4,7 @@ import data
 
 allow {
 
-  input.account == "cvmfs_publisher"
+  input.account == "cvmfspublisher"
 
   obj := input.object
 
@@ -19,7 +19,7 @@ allow {
 
 allow {
 
-  input.account == "cvmfs_publisher"
+  input.account == "cvmfspublisher"
 
   input.action == "s3:ListBucket"
 }
