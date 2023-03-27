@@ -21,8 +21,6 @@ allow {
 
   input.account == "cvmfs_publisher"
 
-  obj := input.object
-
   input.action == "s3:ListBucket"
 }
 
