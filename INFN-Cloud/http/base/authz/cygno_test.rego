@@ -5,7 +5,7 @@ test_post_cygnus_allowed {
                                     "groups": ["cygno-users"],
                                     "iss": data.roles.permissions.issuer
                                   },
-                        "bucket": "cygnus",
+                        "bucket": "cygno-data",
                         "action": "s3:ListBucket"
                       }
 }
