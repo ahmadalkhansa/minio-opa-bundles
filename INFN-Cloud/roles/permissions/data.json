@@ -9,6 +9,8 @@
                    "users/s3"],
     "lhcb_admin_groups": ["/admins/lhcb", "admins/lhcb"],
     "lhcb_users_groups": ["/users/lhcb", "users/lhcb"],
+    "incant_users_groups": ["/users/incant"],
+    "incant_buckets": ["incant"],
     "cygno_buckets": ["cygnus",
                      "cygno-analysis",
                      "cygno-data",
