@@ -2,6 +2,13 @@ package http.base.authz
 import input
 import data
 
+allow {
+  input.account == "cygnodm"
+  input.bucket == data.roles.permissions.cygno_buckets[_]
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
 # Allow users of group Cygno-admis to manage their own data.
 allow {
   grp := input.claims.groups
