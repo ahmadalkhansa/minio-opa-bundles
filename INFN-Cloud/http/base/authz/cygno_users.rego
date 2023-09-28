@@ -82,7 +82,7 @@ allow {
 
 allow {
   grp := input.claims["wlcg.groups"]
-  grp[_] == "training"
+  grp[_] == "/training"
   input.bucket == data.roles.permissions.cygno_data_buckets[_]
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.scratch
