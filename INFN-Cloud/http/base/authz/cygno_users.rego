@@ -68,3 +68,23 @@ allow {
   permissions := data.roles.permissions.user
   permissions[_] == {"action": input.action}
 }
+
+# Temporarily give:
+# ro for the "training" IAM group to cygno-data and cygnus buckets
+allow {
+  grp := input.claims.groups
+  grp[_] == "training"
+  input.bucket == data.roles.permissions.cygno_data_buckets[_]
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.scratch
+  permissions[_] == {"action": input.action}
+}
+
+allow {
+  grp := input.claims["wlcg.groups"]
+  grp[_] == "/training"
+  input.bucket == data.roles.permissions.cygno_data_buckets[_]
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.scratch
+  permissions[_] == {"action": input.action}
+}
