@@ -1,7 +1,7 @@
 {
     "user_groups": ["end-users-catchall", "/end-users-catchall",
-                   "training-users",
-                   "training",  
+                   "users/training",
+                   "admins/training",  
                    "naas", "/naas",
                    "users/naas",
                    "users/muone",
