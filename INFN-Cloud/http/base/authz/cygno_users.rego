@@ -29,7 +29,27 @@ allow {
   permissions[_] == {"action": input.action}
 }
 
-# Allow users of group Cygno to see the data.
+# Allow users of group admins/cygno to manage their own data.
+allow {
+  grp := input.claims.groups
+  grp[_] == "admins/cygno"
+  input.bucket == data.roles.permissions.cygno_buckets[_]
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
+# Same for wlcg profile
+allow {
+  grp := input.claims["wlcg.groups"]
+  grp[_] == "/admins/cygno"
+  input.bucket == data.roles.permissions.cygno_buckets[_]
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
+# Allow users of group cygno-users to see the data.
 allow {
   grp := input.claims.groups
   grp[_] == "cygno-users"
@@ -49,7 +69,27 @@ allow {
   permissions[_] == {"action": input.action}
 }
 
-# Allow users of group Cygno to manage their analysis and simulations.
+# Allow users of group users/cygno to see the data.
+allow {
+  grp := input.claims.groups
+  grp[_] == "users/cygno"
+  input.bucket == data.roles.permissions.cygno_data_buckets[_]
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.scratch
+  permissions[_] == {"action": input.action}
+}
+
+# Wlcg profile
+allow {
+  grp := input.claims["wlcg.groups"]
+  grp[_] == "/users/cygno"
+  input.bucket == data.roles.permissions.cygno_data_buckets[_]
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.scratch
+  permissions[_] == {"action": input.action}
+}
+
+# Allow users of group cygno-users to manage their analysis and simulations.
 allow {
   grp := input.claims.groups
   grp[_] == "cygno-users"
@@ -63,6 +103,26 @@ allow {
 allow {
   grp := input.claims["wlcg.groups"]
   grp[_] == "/cygno-users"
+  input.bucket == data.roles.permissions.cygno_work_buckets[_]
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
+# Allow users of group users/cygno to manage their analysis and simulations.
+allow {
+  grp := input.claims.groups
+  grp[_] == "users/cygno"
+  input.bucket == data.roles.permissions.cygno_work_buckets[_]
+  startswith(input.claims.iss, data.roles.permissions.issuer)
+  permissions := data.roles.permissions.user
+  permissions[_] == {"action": input.action}
+}
+
+# Wlcg profile
+allow {
+  grp := input.claims["wlcg.groups"]
+  grp[_] == "/users/cygno"
   input.bucket == data.roles.permissions.cygno_work_buckets[_]
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.user
