@@ -36,8 +36,8 @@ allow {
   grp := input.claims["wlcg.groups"]
   grp[_] == data.roles.permissions.user_groups[_]
   username := split(lower(input.claims.preferred_username),"@")[0]
-  username == anderlinil
-  input.bucket == infn-ai-test
+  username == "anderlinil"
+  input.bucket == "infn-ai-test"
   startswith(input.claims.iss, data.roles.permissions.issuer)
   permissions := data.roles.permissions.user
   permissions[_] == {"action": input.action}
