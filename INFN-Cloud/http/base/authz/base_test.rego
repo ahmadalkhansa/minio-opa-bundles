@@ -2,7 +2,7 @@ package http.base.authz
 
 
 test_post_allowed {
-  allow with input as { "claims": { "preferred_username": "matteo_barbetti",
+  not allow with input as { "claims": { "preferred_username": "matteo_barbetti",
                                     "iss": data.roles.permissions.issuer,
                                     "groups": ["end-users-catchall"]
                                   },
@@ -12,7 +12,7 @@ test_post_allowed {
 }
 
 test_post_wlcg_allowed {
-  allow with input as { "claims": { "sub": "2f8dcc16-c636-4a56-9ada-63b761d89286",
+  not allow with input as { "claims": { "sub": "2f8dcc16-c636-4a56-9ada-63b761d89286",
                                     "iss": data.roles.permissions.issuer,
                                     "aud": "https://wlcg.cern.ch/jwt/v1/any",
                                   },
