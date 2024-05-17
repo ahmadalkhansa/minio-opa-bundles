@@ -29,7 +29,7 @@ jobs:
         run: |
           sudo apt update && sudo apt install -y oidc-agent
       - name: Make example bundle
-        run: mkdir bundles && cd example && tar czvf ../bundles/example-bundle.tar.gz ./ 
+        run: mkdir bundles && pwd && ls && cd example && tar czvf ../bundles/example-bundle.tar.gz ./ 
         timeout-minutes: 6
       - name: test example bundle
         run: ./opa test --bundle ./bundles/example-bundle.tar.gz
