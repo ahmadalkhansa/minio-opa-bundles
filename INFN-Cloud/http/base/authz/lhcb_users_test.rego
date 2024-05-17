@@ -1,7 +1,7 @@
 package http.base.authz
 
 test_post_lhcbusers_allowed {
-  allow with input as { "claims": { "preferred_username": "matteo_barbetti",
+  not allow with input as { "claims": { "preferred_username": "matteo_barbetti",
                                     "groups": ["users/lhcb"],
                                     "iss": data.roles.permissions.issuer
                                   },
